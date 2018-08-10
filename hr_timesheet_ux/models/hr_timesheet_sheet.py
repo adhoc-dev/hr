@@ -59,6 +59,19 @@ class HrTimesheetSheet(models.Model):
                 rec.theoretical_hours
 
     @api.multi
+    def get_employee_timesheets(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Timesheets'),
+            'res_model': 'account.analytic.line',
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'domain': [('id', 'in', self.timesheet_ids.ids)],
+            'context': {'search_default_employee_id': self.employee_id.id},
+        }
+
+    @api.multi
     def get_employee_attendance(self):
         self.ensure_one()
         return {

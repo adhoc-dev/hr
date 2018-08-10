@@ -17,12 +17,22 @@
             <div class="oe_title" position="before">
                 <div class="oe_button_box" name="button_box">
                     <button type="object"
+                        class="oe_stat_button" icon="fa-clock-o"
+                        name="get_employee_timesheets">
+                        <div class="o_form_field o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="total_timesheet" widget="float_time"/>
+                            </span>
+                            <span class="o_stat_text">Timesheets</span>
+                        </div>
+                    </button>
+                    <button type="object"
                         class="oe_stat_button" icon="fa-users"
                         name="get_employee_attendance">
                         <field name="attendance_count" widget="statinfo" string="Attendances"/>
                     </button>
                     <button type="object"
-                        class="oe_stat_button" icon="fa-clock-o"
+                        class="oe_stat_button" icon="fa-calendar"
                         name="get_employee_attendance_timesheet_report">
                         <span class="o_stat_text">Attendances vs Timesheet</span>
                     </button>
