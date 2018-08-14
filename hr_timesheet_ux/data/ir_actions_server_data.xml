@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_timesheet_status" model="ir.actions.server">
+        <field name="name">My Timesheet / Attendance</field>
+        <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
+        <field name="state">code</field>
+        <field name="code">
+# Available variables:
+#  - env: Odoo Environment on which the action is triggered
+#  - model: Odoo Model of the record on which the action is triggered; is a void recordset
+#  - record: record on which the action is triggered; may be be void
+#  - records: recordset of all records on which the action is triggered in multi-mode; may be void
+#  - time, datetime, dateutil, timezone: useful Python libraries
+#  - log: log(message, level='info'): logging function to record debug information in ir.logging table
+#  - Warning: Warning Exception to use with raise
+# To return an action, assign: action = {...}
+
+
+last_attendance = env['hr.attendance'].search([
+    ('employee_id', 'in', env.user.employee_ids.mapped('id')),
+    ('check_in', '!=', False),
+    ('check_out', '=', False),
+])
+
+if not last_attendance:
+  raise Warning("No hay sesion abierta")
+
+last_attendance._compute_current_worked_hours()
+
+action = {
+  'type': 'ir.actions.act_window',
+  'name': 'My Timesheet / Attendance',
+  "res_model": 'hr.timesheet.attendance.report.current',
+  "view_mode": "pivot",
+  "context": {
+            'search_default_week': True,
+            'search_default_user_id': uid,
+            'pivot_column_groupby': [],
+            'pivot_measures': ['total_attendance', 'total_timesheet', 'total_difference'],
+            'pivot_row_groupby': ['date:day'],
+        },
+  }
+      </field>
+    </record>
+
+</odoo>

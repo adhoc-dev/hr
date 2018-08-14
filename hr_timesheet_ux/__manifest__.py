@@ -32,7 +32,10 @@
     'external_dependencies': {
     },
     "data": [
-        'views/account_analytic_line_views.xml',
+        'data/ir_actions_server_data.xml',
+        'views/ir_ui_menu.xml',
+        'report/hr_timesheet_attendance_report_views.xml',
+        'security/ir.model.access.csv',
     ],
     'demo': [
     ],
